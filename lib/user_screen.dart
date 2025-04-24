@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'UserProfileScreen.dart';
-import 'search_dialog.dart';
+import 'search_overlay.dart';
+
 class UserScreen extends StatefulWidget {
   @override
   _UserScreenState createState() => _UserScreenState();
 }
 
 class _UserScreenState extends State<UserScreen> {
+  bool _isSearching = false;
+TextEditingController _searchController = TextEditingController();
   bool _showBottomBar = true;
 
   @override
@@ -60,7 +63,6 @@ class _UserScreenState extends State<UserScreen> {
         'comment': 'its amazing?',
         'commentCount': '1000k',
       },
-      
       {
         'posterName': 'MarieSandrine',
         'profileImage': 'assets/images/post.png',
@@ -105,16 +107,14 @@ class _UserScreenState extends State<UserScreen> {
         'comment': 'Wow, Interesting.',
         'commentCount': '160k',
       },
-
-
-      
-      
     ];
 
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFFE4ECFF),
-        body: LayoutBuilder(
+        body:
+         LayoutBuilder(
+
           builder: (context, constraints) {
             final screenHeight = constraints.maxHeight;
             final screenWidth = constraints.maxWidth;
@@ -451,6 +451,8 @@ class _UserScreenState extends State<UserScreen> {
             );
           },
         ),
+       
+
         bottomNavigationBar: AnimatedContainer(
           duration: Duration(milliseconds: 300),
           height: _showBottomBar ? 60.0 : 0.0,
@@ -490,11 +492,18 @@ class _UserScreenState extends State<UserScreen> {
                       color: Colors.white,
                       onPressed: () {},
                     ),
-                    IconButton(
-                      icon: Icon(Icons.search),
-                      color: Colors.white,
-                      onPressed: () {},
-                    ),
+
+
+                    
+                   IconButton(
+  icon: Icon(Icons.search),
+  color: Colors.white,
+  onPressed: () {
+    setState(() {
+      _isSearching = !_isSearching; // toggle the search overlay
+    });
+  },
+),
                     IconButton(
                       icon: Icon(Icons.add),
                       color: Colors.white,
@@ -507,24 +516,44 @@ class _UserScreenState extends State<UserScreen> {
                     ),
                     // Profile Avatar
 
-                   GestureDetector(
-  onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => UserProfileScreen()),
-    );
-  },
-  child: CircleAvatar(
-    radius: 15.0,
-    backgroundImage: AssetImage('assets/images/pcc.png'),
-  ),
-),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UserProfileScreen()),
+                        );
+                      },
+                      child: CircleAvatar(
+                        radius: 15.0,
+                        backgroundImage: AssetImage('assets/images/pcc.png'),
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
           ),
         ),
+//         Stack(
+//   children: [
+//     // Your other widgets go here (ListView, Column, etc)
+//     // Example:
+//     YourMainWidget(),
+
+//     // This will show the search overlay at the top when icon is tapped
+//     if (_isSearching)
+//       SearchOverlay(
+//         controller: _searchController,
+//         onClear: () {
+//           _searchController.clear();
+//           setState(() {
+//             _isSearching = false; // close the search bar
+//           });
+//         },
+//       ),
+//   ],
+// ),
       ),
     );
   }
