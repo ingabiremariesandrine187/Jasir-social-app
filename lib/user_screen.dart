@@ -3,6 +3,10 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'UserProfileScreen.dart';
 import 'search_overlay.dart';
+import 'create_post_page.dart'; // Make sure this is at the top
+import 'play_screen.dart';
+
+
 
 class UserScreen extends StatefulWidget {
   @override
@@ -504,16 +508,27 @@ TextEditingController _searchController = TextEditingController();
     });
   },
 ),
+                  IconButton(
+  icon: Icon(Icons.add),
+  color: Colors.white,
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CreatePostPage()),
+    );
+  },
+),
+
                     IconButton(
-                      icon: Icon(Icons.add),
-                      color: Colors.white,
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.play_arrow),
-                      color: Colors.white,
-                      onPressed: () {},
-                    ),
+  icon: Icon(Icons.play_arrow),
+  color: Colors.white,
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const PlayScreen()),
+    );
+  },
+),
                     // Profile Avatar
 
                     GestureDetector(
