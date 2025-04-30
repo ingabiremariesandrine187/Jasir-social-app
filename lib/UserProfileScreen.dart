@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'welcome_screen.dart';
 class UserProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,10 @@ class UserProfileScreen extends StatelessWidget {
                 ),
                 OutlinedButton.icon(
                   onPressed: () {
-                    // Add logout logic
+      Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => HomeScreen()),
+      (Route<dynamic> route) => false,
+    );
                   },
                   icon: Icon(Icons.logout),
                   label: Text("Logout"),
